@@ -22,7 +22,5 @@ class SuperFakturaAPI:
 
     def post(self, endpoint: str, data: dict) -> Dict:
         url = f"{self._api_url}/{endpoint}"
-        print(url)
-        print(data)
         req = requests.post(url=url, headers=self._auth_header, data=data)
         return req.json()
