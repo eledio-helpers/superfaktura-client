@@ -6,7 +6,7 @@ from superfaktura.bank_account import BankAccount
 from superfaktura.client_contacts import ClientContactModel
 from superfaktura.enumerations.currency import Currencies
 from superfaktura.superfaktura_api import SuperFakturaAPI
-from utils.data_types import Date, DateEncoder
+from superfaktura.utils.data_types import Date, DateEncoder
 
 
 @dataclass
