@@ -1,5 +1,4 @@
 from dataclasses import dataclass, asdict
-from pprint import pprint
 from typing import Optional, List
 import json
 
@@ -88,6 +87,11 @@ class InvoiceItem:
         return data
 
 
+class InvoiceType:
+    PROFORMA = "proforma"
+    INVOICE = "regular"
+
+
 class Invoice(SuperFakturaAPI):
     def __init__(self):
         super().__init__()
@@ -113,7 +117,7 @@ if __name__ == "__main__":
     bank = BankAccount()
     invoice.add(
         invoice=InvoiceModel(
-            type="proforma",
+            type=InvoiceType.PROFORMA,
             name="Invoice 3",
             due=Date("2025-02-01"),
             invoice_currency=Currencies.CZK,
