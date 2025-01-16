@@ -8,6 +8,9 @@ from dotenv import load_dotenv  # type: ignore
 class SuperFakturaAPIException(Exception):
     pass
 
+class SuperFakturaAPIMissingCredentialsException(Exception):
+    pass
+
 
 class SuperFakturaAPI:
     def __init__(self) -> None:
@@ -16,6 +19,9 @@ class SuperFakturaAPI:
         self._api_url = os.getenv("SUPERFAKTURA_API_URL")
         _api_mail = os.getenv("SUPERFAKTURA_API_EMAIL")
         _api_company_id = os.getenv("SUPERFAKTURA_API_COMPANY_ID")
+        if not _api_key or not self._api_url or not _api_mail or not _api_company_id:
+            raise SuperFakturaAPIMissingCredentialsException('Please ensure, that necessary credentials are set. Please see README.md')
+
         self._auth_header = {
             "Authorization": f"SFAPI email={_api_mail}&apikey={_api_key}&company_id={_api_company_id}"
         }
