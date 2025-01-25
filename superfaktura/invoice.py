@@ -53,13 +53,16 @@ Usage:
 """
 
 from dataclasses import dataclass, asdict
-from typing import Optional, List
+from typing import Optional, List, IO
 import json
 
 from superfaktura.bank_account import BankAccount
 from superfaktura.client_contacts import ClientContactModel
 from superfaktura.enumerations.currency import Currencies
+from superfaktura.enumerations.data_format import DataFormat
+from superfaktura.enumerations.language import Language
 from superfaktura.superfaktura_api import SuperFakturaAPI
+from superfaktura.utils import save_temporary_file_as_pdf
 from superfaktura.utils.data_types import Date, DateEncoder
 
 
@@ -147,6 +150,14 @@ class InvoiceItem:
         return data
 
 
+@dataclass
+class InvoiceRespModel:
+    error: int
+    error_message: str
+    invoice_id: Optional[int] = None
+    invoice_token: Optional[str] = None
+
+
 class InvoiceType:
     """ "
     Invoice Type Enumeration.
@@ -212,8 +223,18 @@ class Invoice(SuperFakturaAPI):
         invoice_model: InvoiceModel,
         items: List[InvoiceItem],
         contact: ClientContactModel,
-    ):
-        """Creates a new invoice."""
+    ) -> InvoiceRespModel:
+        """
+        Adds a new invoice.
+
+        Args:
+            invoice (InvoiceModel): The invoice model.
+            items (List[InvoiceItem]): List of invoice items.
+            contact (ClientContactModel): The client contact model.
+
+        Returns:
+            InvoiceRespModel: The response model for the invoice.
+        """
         data = {
             "Invoice": invoice_model.as_dict(),
             "InvoiceItem": [item.as_dict() for item in items],
@@ -221,23 +242,50 @@ class Invoice(SuperFakturaAPI):
         }
         url = "invoices/create"
         resp = self.post(endpoint=url, data=json.dumps(data, cls=DateEncoder))
-        return resp
+        invoice_resp = InvoiceRespModel(
+            error=resp["error"], error_message=resp["error_message"]
+        )
+        if "data" in resp:
+            if "Invoice" in resp["data"]:
+                invoice_resp.invoice_id = int(resp["data"]["Invoice"]["id"])
+                invoice_resp.invoice_token = resp["data"]["Invoice"]["token"]
+        return invoice_resp
+
+    def get_pdf(
+        self, invoice: InvoiceRespModel, language: str = Language.Czech
+    ) -> IO[bytes]:
+        """
+        Retrieves the PDF of the invoice.
+
+        Args:
+            invoice (InvoiceRespModel): The response model for the invoice.
+            language (str): The language for the PDF.
+
+        Returns:
+            IO[bytes]: A file-like object containing the PDF data.
+        """
+        url = f"{language}/invoices/pdf/{invoice.invoice_id}/token:{invoice.invoice_token}"
+        document = self.get(url, data_format=DataFormat.PDF)["pdf"]
+        temp_pdf = tempfile.TemporaryFile()
+        temp_pdf.write(document)
+        temp_pdf.seek(0)
+        return temp_pdf
 
 
 if __name__ == "__main__":
     invoice = Invoice()
     bank = BankAccount()
-    invoice.add(
+    resp = invoice.add(
         invoice_model=InvoiceModel(
             type=InvoiceType.PROFORMA,
-            name="Invoice 3",
+            name="Invoice 5",
             due=Date("2025-02-01"),
             invoice_currency=Currencies.CZK,
             header_comment="We invoice you for services",
             bank_accounts=[bank.default().as_dict()],
         ),
         items=[
-            InvoiceItem(name="Services", unit_price=100, quantity=1, unit="ks", tax=21),
+            InvoiceItem(name="Services", unit_price=100, quantity=5, unit="ks", tax=21),
             InvoiceItem(name="SIM card", unit_price=50, quantity=1, tax=21, unit="ks"),
             InvoiceItem(
                 name="SIM card 2", unit_price=75, quantity=1, tax=21, unit="ks"
@@ -253,3 +301,10 @@ if __name__ == "__main__":
             country_id=57,
         ),
     )
+    _pdf = invoice.get_pdf(resp)
+
+    save_temporary_file_as_pdf(_pdf, "invoice.pdf")
+
+    from pprint import pprint
+
+    pprint(resp)
