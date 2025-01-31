@@ -45,7 +45,7 @@ class BankAccount(SuperFakturaAPI):
         url = "bank_accounts/index"
         return self.get(url)
 
-    def default(self) -> Optional[BankAccountModel]:
+    def default(self) -> BankAccountModel:
         accounts = self.list()["BankAccounts"]
         for account in accounts:
             if account["BankAccount"]["default"]:
