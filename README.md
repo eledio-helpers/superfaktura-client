@@ -1,5 +1,8 @@
 # SuperFaktura API client
 
+![Pylint Score](https://github.com/eledio-helpers/superfaktura-client/actions/workflows/pylint.yml/badge.svg)
+
+
 Library for handling of SuperFaktura API.
 
 Environment variables:
