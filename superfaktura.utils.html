@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>superfaktura.utils package &mdash; SuperFaktura API client  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SuperFaktura API client
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="superfaktura.html">SuperFaktura API client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SuperFaktura API client</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">superfaktura.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/superfaktura.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="superfaktura-utils-package">
+<h1>superfaktura.utils package<a class="headerlink" href="#superfaktura-utils-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-superfaktura.utils.country">
+<span id="superfaktura-utils-country-module"></span><h2>superfaktura.utils.country module<a class="headerlink" href="#module-superfaktura.utils.country" title="Link to this heading"></a></h2>
+<p>Country Module.</p>
+<p>This module provides utilities for working with countries in the SuperFaktura API.</p>
+<dl class="simple">
+<dt>Functions:</dt><dd><ul class="simple">
+<li><p>country_list: Retrieves a list of countries.</p></li>
+</ul>
+</dd>
+<dt>Usage:</dt><dd><p>from superfaktura.utils.country import country_list
+countries = country_list()
+print(countries)</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="superfaktura.utils.country.country_list">
+<span class="sig-prename descclassname"><span class="pre">superfaktura.utils.country.</span></span><span class="sig-name descname"><span class="pre">country_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#superfaktura.utils.country.country_list" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a list of countries.</p>
+<p>This function returns a list of countries that can be used in the SuperFaktura API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of countries.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>list</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Usage:</dt><dd><p>countries = country_list()
+print(countries)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-superfaktura.utils.data_types">
+<span id="superfaktura-utils-data-types-module"></span><h2>superfaktura.utils.data_types module<a class="headerlink" href="#module-superfaktura.utils.data_types" title="Link to this heading"></a></h2>
+<p>Data Types Module.</p>
+<p>This module provides data types and utilities for working with dates and other data types
+in the SuperFaktura API.</p>
+<dl class="simple">
+<dt>Classes:</dt><dd><ul class="simple">
+<li><p>Date: Represents a date in the format YYYY-MM-DD.</p></li>
+<li><p>DateTime: Represents a date and time in the format YYYY-MM-DD HH:MM:SS.</p></li>
+</ul>
+</dd>
+<dt>Functions:</dt><dd><ul class="simple">
+<li><p>(none)</p></li>
+</ul>
+</dd>
+<dt>Usage:</dt><dd><p>from superfaktura.utils.data_types import Date, DateTime
+date = Date(“2022-01-01”)
+datetime = DateTime(“2022-01-01 12:00:00”)</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="superfaktura.utils.data_types.Date">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">superfaktura.utils.data_types.</span></span><span class="sig-name descname"><span class="pre">Date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#superfaktura.utils.data_types.Date" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Date Class.</p>
+<p>This class represents a date in the format YYYY-MM-DD.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">date</span></span></dt>
+<dd><p>The date in the format YYYY-MM-DD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">__str__</span></span></dt>
+<dd><p>Returns the date as a string.</p>
+</dd></dl>
+
+<dl class="simple">
+<dt>Usage:</dt><dd><p>date = Date(“2022-01-01”)
+print(date)  # Output: 2022-01-01</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="superfaktura.utils.data_types.Date.is_set">
+<span class="sig-name descname"><span class="pre">is_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#superfaktura.utils.data_types.Date.is_set" title="Link to this definition"></a></dt>
+<dd><p>Returns True if the date is set, otherwise False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="superfaktura.utils.data_types.Date.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#superfaktura.utils.data_types.Date.to_dict" title="Link to this definition"></a></dt>
+<dd><p>Converts the Date object to a serializable format.
+:return: The date as a string in YYYY-MM-DD format, or None if not set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="superfaktura.utils.data_types.Date.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#superfaktura.utils.data_types.Date.to_json" title="Link to this definition"></a></dt>
+<dd><p>Converts the Date object to a JSON serializable format.
+:return: The date as a string in YYYY-MM-DD format, or None if not set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="superfaktura.utils.data_types.DateEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">superfaktura.utils.data_types.</span></span><span class="sig-name descname"><span class="pre">DateEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#superfaktura.utils.data_types.DateEncoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">JSONEncoder</span></code></p>
+<p>Date Encoder Class.</p>
+<p>This class is a custom JSON encoder that converts Date objects to strings.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">-</span> <span class="pre">default</span></span></dt>
+<dd><p>Encodes a Date object as a string.</p>
+</dd></dl>
+
+<dl class="simple">
+<dt>Usage:</dt><dd><p>encoder = DateEncoder()
+date = Date(“2022-01-01”)
+json_string = json.dumps(date, cls=encoder)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="superfaktura.utils.data_types.DateEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#superfaktura.utils.data_types.DateEncoder.default" title="Link to this definition"></a></dt>
+<dd><p>Implement this method in a subclass such that it returns
+a serializable object for <code class="docutils literal notranslate"><span class="pre">o</span></code>, or calls the base implementation
+(to raise a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>).</p>
+<p>For example, to support arbitrary iterators, you could
+implement default like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="c1"># Let the base class default method raise the TypeError</span>
+    <span class="k">return</span> <span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-superfaktura.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-superfaktura.utils" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Richard Kubíček, Eledio s.r.o..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
