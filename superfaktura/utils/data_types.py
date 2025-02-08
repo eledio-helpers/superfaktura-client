@@ -60,8 +60,10 @@ class Date:
         """
         try:
             return datetime.strptime(date_str, "%Y-%m-%d")
-        except ValueError:
-            raise ValueError(f"Date must be in format YYYY-MM-DD, got: {date_str}")
+        except ValueError as exc:
+            raise ValueError(
+                f"Date must be in format YYYY-MM-DD, got: {date_str}"
+            ) from exc
 
     def __str__(self) -> str:
         """
