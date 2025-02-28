@@ -1,3 +1,22 @@
+"""
+Data Types Module.
+
+This module provides data types and utilities for working with dates and other data types
+in the SuperFaktura API.
+
+Classes:
+    - Date: Represents a date in the format YYYY-MM-DD.
+    - DateTime: Represents a date and time in the format YYYY-MM-DD HH:MM:SS.
+
+Functions:
+    - (none)
+
+Usage:
+    from superfaktura.utils.data_types import Date, DateTime
+    date = Date("2022-01-01")
+    datetime = DateTime("2022-01-01 12:00:00")
+"""
+
 from datetime import datetime
 from typing import Optional
 
@@ -5,6 +24,22 @@ import json
 
 
 class Date:
+    """
+    Date Class.
+
+    This class represents a date in the format YYYY-MM-DD.
+
+    Attributes:
+        - date (str): The date in the format YYYY-MM-DD.
+
+    Methods:
+        - __str__: Returns the date as a string.
+
+    Usage:
+        date = Date("2022-01-01")
+        print(date)  # Output: 2022-01-01
+    """
+
     def __init__(self, date_str: Optional[str] = None):
         """
         Creates a Date instance that supports typing and validation for the format YYYY-MM-DD.
@@ -25,8 +60,10 @@ class Date:
         """
         try:
             return datetime.strptime(date_str, "%Y-%m-%d")
-        except ValueError:
-            raise ValueError(f"Date must be in format YYYY-MM-DD, got: {date_str}")
+        except ValueError as exc:
+            raise ValueError(
+                f"Date must be in format YYYY-MM-DD, got: {date_str}"
+            ) from exc
 
     def __str__(self) -> str:
         """
@@ -56,6 +93,20 @@ class Date:
 
 
 class DateEncoder(json.JSONEncoder):
+    """
+    Date Encoder Class.
+
+    This class is a custom JSON encoder that converts Date objects to strings.
+
+    Methods:
+        - default: Encodes a Date object as a string.
+
+    Usage:
+        encoder = DateEncoder()
+        date = Date("2022-01-01")
+        json_string = json.dumps(date, cls=encoder)
+    """
+
     def default(self, o):
         if isinstance(o, Date):
             return o.to_json()

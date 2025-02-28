@@ -1,0 +1,48 @@
+name: Pylint
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pylint
+    - name: pylint
+      run: |
+        pylint $(git ls-files '*.py') --fail-under=9.0 --output-format=json > pylint-report.json
+
+    - name: Generate Pylint Score
+      id: pylint_score
+      run: |
+        SCORE=$(cat pylint-report.json | jq '[.[].score] | add / length' || echo 0)
+        echo "score=${SCORE:-0}" >> $GITHUB_ENV
+
+    - name: Upload Pylint Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: pylint-report
+        path: pylint-report.json
+
+    - name: Create Pylint Badge
+      run: |
+        SCORE=$(echo "${{ env.score }}" | awk '{print int($1)}')
+        COLOR="red"
+        if [ "$SCORE" -ge 8 ]; then COLOR="green"; elif [ "$SCORE" -ge 5 ]; then COLOR="yellow"; fi
+        curl -o pylint-badge.svg "https://img.shields.io/badge/Pylint-$SCORE%2F10-$COLOR"
+
+    - name: Upload Pylint Badge
+      uses: actions/upload-artifact@v4
+      with:
+        name: pylint-badge
+        path: pylint-badge.svg
