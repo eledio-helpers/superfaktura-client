@@ -52,6 +52,7 @@ Usage:
     )
 """
 
+import tempfile
 from dataclasses import dataclass, asdict
 from typing import Optional, List, IO
 import json
@@ -152,6 +153,16 @@ class InvoiceItem:
 
 @dataclass
 class InvoiceRespModel:
+    """
+    This dataclass represents the response model for an invoice in the SuperFaktura API.
+
+    Attributes:
+        - error (int): The error code.
+        - error_message (str): The error message.
+        - invoice_id (Optional[int]): The ID of the invoice.
+        - invoice_token (Optional[str]): The token of
+    """
+
     error: int
     error_message: str
     invoice_id: Optional[int] = None
@@ -159,7 +170,7 @@ class InvoiceRespModel:
 
 
 class InvoiceType:
-    """ "
+    """
     Invoice Type Enumeration.
 
     This enumeration represents the different types of invoices that can be created.
@@ -228,12 +239,15 @@ class Invoice(SuperFakturaAPI):
         Adds a new invoice.
 
         Args:
-            invoice (InvoiceModel): The invoice model.
+            invoice_model (InvoiceModel): The invoice model.
             items (List[InvoiceItem]): List of invoice items.
             contact (ClientContactModel): The client contact model.
 
         Returns:
             InvoiceRespModel: The response model for the invoice.
+            :param contact:
+            :param items:
+            :param invoice_model:
         """
         data = {
             "Invoice": invoice_model.as_dict(),
@@ -278,8 +292,8 @@ if __name__ == "__main__":
     resp = invoice.add(
         invoice_model=InvoiceModel(
             type=InvoiceType.PROFORMA,
-            name="Invoice 5",
-            due=Date("2025-02-01"),
+            name="Invoice 8",
+            due=Date("2025-04-01"),
             invoice_currency=Currencies.CZK,
             header_comment="We invoice you for services",
             bank_accounts=[bank.default().as_dict()],
