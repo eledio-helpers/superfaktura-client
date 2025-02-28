@@ -2,6 +2,8 @@
 This module contains tools for working with these examples.
 """
 
+from pathlib import Path
+
 
 def save_file_as_pdf(input_data: bytes, output_path: str = "output.pdf") -> None:
     """
@@ -10,5 +12,5 @@ def save_file_as_pdf(input_data: bytes, output_path: str = "output.pdf") -> None
     :param output_path:
     :return:
     """
-    with open(output_path, "wb") as f:
-        f.write(input_data)
+    p = Path(output_path)
+    p.write_bytes(input_data)
