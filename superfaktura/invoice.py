@@ -52,9 +52,8 @@ Usage:
     )
 """
 
-import tempfile
 from dataclasses import dataclass, asdict
-from typing import Optional, List, IO
+from typing import Optional, List
 import json
 
 from superfaktura.bank_account import BankAccount
@@ -267,7 +266,7 @@ class Invoice(SuperFakturaAPI):
 
     def get_pdf(
         self, invoice: InvoiceRespModel, language: str = Language.Czech
-    ) -> IO[bytes]:
+    ) -> bytes:
         """
         Retrieves the PDF of the invoice.
 
@@ -276,14 +275,11 @@ class Invoice(SuperFakturaAPI):
             language (str): The language for the PDF.
 
         Returns:
-            IO[bytes]: A file-like object containing the PDF data.
+            bytes: A bytes containing the PDF data.
         """
         url = f"{language}/invoices/pdf/{invoice.invoice_id}/token:{invoice.invoice_token}"
         document = self.get(url, data_format=DataFormat.PDF)["pdf"]
-        temp_pdf = tempfile.TemporaryFile()
-        temp_pdf.write(document)
-        temp_pdf.seek(0)
-        return temp_pdf
+        return document
 
 
 if __name__ == "__main__":
