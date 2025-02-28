@@ -56,13 +56,10 @@ from dataclasses import dataclass, asdict
 from typing import Optional, List
 import json
 
-from superfaktura.bank_account import BankAccount
 from superfaktura.client_contacts import ClientContactModel
-from superfaktura.enumerations.currency import Currencies
 from superfaktura.enumerations.data_format import DataFormat
 from superfaktura.enumerations.language import Language
 from superfaktura.superfaktura_api import SuperFakturaAPI
-from superfaktura.utils import save_temporary_file_as_pdf
 from superfaktura.utils.data_types import Date, DateEncoder
 
 
@@ -168,6 +165,31 @@ class InvoiceRespModel:
     invoice_token: Optional[str] = None
 
 
+@dataclass
+class InvoiceSettings:
+    """
+    This dataclass represents the settings for an invoice in the SuperFaktura API.
+    """
+
+    language: Optional[str] = None
+    bysquare: Optional[bool] = None
+    callback_payment: Optional[str] = None
+    online_payment: Optional[bool] = None
+    payment_info: Optional[bool] = None
+    paypal: Optional[bool] = None
+    show_prices: Optional[bool] = None
+    signature: Optional[bool] = None
+    summary_bg_color: Optional[str] = None
+
+    def as_dict(self) -> dict:
+        """Returns a dictionary representation of the ClientContactModel."""
+        data = asdict(self)
+        for key in list(data.keys()):
+            if data[key] is None:
+                del data[key]
+        return data
+
+
 class InvoiceType:
     """
     Invoice Type Enumeration.
@@ -233,6 +255,7 @@ class Invoice(SuperFakturaAPI):
         invoice_model: InvoiceModel,
         items: List[InvoiceItem],
         contact: ClientContactModel,
+        invoice_settings: Optional[InvoiceSettings],
     ) -> InvoiceRespModel:
         """
         Adds a new invoice.
@@ -241,9 +264,11 @@ class Invoice(SuperFakturaAPI):
             invoice_model (InvoiceModel): The invoice model.
             items (List[InvoiceItem]): List of invoice items.
             contact (ClientContactModel): The client contact model.
+            invoice_settings (Optional[InvoiceSettings]): The invoice settings.
 
         Returns:
             InvoiceRespModel: The response model for the invoice.
+            :param invoice_settings:
             :param contact:
             :param items:
             :param invoice_model:
@@ -252,6 +277,7 @@ class Invoice(SuperFakturaAPI):
             "Invoice": invoice_model.as_dict(),
             "InvoiceItem": [item.as_dict() for item in items],
             "Client": contact.as_dict(),
+            "InvoiceSetting": invoice_settings.as_dict(),
         }
         url = "invoices/create"
         resp = self.post(endpoint=url, data=json.dumps(data, cls=DateEncoder))
@@ -280,41 +306,3 @@ class Invoice(SuperFakturaAPI):
         url = f"{language}/invoices/pdf/{invoice.invoice_id}/token:{invoice.invoice_token}"
         document = self.get(url, data_format=DataFormat.PDF)["pdf"]
         return document
-
-
-if __name__ == "__main__":
-    invoice = Invoice()
-    bank = BankAccount()
-    resp = invoice.add(
-        invoice_model=InvoiceModel(
-            type=InvoiceType.PROFORMA,
-            name="Invoice 8",
-            due=Date("2025-04-01"),
-            invoice_currency=Currencies.CZK,
-            header_comment="We invoice you for services",
-            bank_accounts=[bank.default().as_dict()],
-        ),
-        items=[
-            InvoiceItem(name="Services", unit_price=100, quantity=5, unit="ks", tax=21),
-            InvoiceItem(name="SIM card", unit_price=50, quantity=1, tax=21, unit="ks"),
-            InvoiceItem(
-                name="SIM card 2", unit_price=75, quantity=1, tax=21, unit="ks"
-            ),
-        ],
-        contact=ClientContactModel(
-            name="Richard Kubíček",
-            email="kubicekr@eledio.com",
-            phone="+420 123 456 789",
-            address="Jaroslava Foglara 861/1",
-            ico="123",
-            update=True,
-            country_id=57,
-        ),
-    )
-    _pdf = invoice.get_pdf(resp)
-
-    save_temporary_file_as_pdf(_pdf, "invoice.pdf")
-
-    from pprint import pprint
-
-    pprint(resp)
