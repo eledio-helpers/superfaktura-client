@@ -36,7 +36,10 @@ from superfaktura.invoice import (
 from superfaktura.utils.data_types import Date
 
 
-if __name__ == "__main__":
+def main():
+    """
+    Main function to add Invoice and save it as a pdf using the SuperFaktura API.
+    """
     invoice = Invoice()
     bank = BankAccount()
     resp = invoice.add(
@@ -70,3 +73,7 @@ if __name__ == "__main__":
     _pdf = invoice.get_pdf(invoice=resp, language=Language.English)
 
     save_file_as_pdf(_pdf, "invoice.pdf")
+
+
+if __name__ == "__main__":
+    main()
