@@ -5,7 +5,7 @@ setup(
     version="0.1.0",
     packages=find_namespace_packages(),
     url="https://github.com/eledio-helpers/superfaktura-client",
-    license="GNU GPLv3",
+    license="MIT",
     author="Richard Kubíček",
     author_email="kubicekr@eledio.com",
     install_requires=["requests", "python-dotenv"],
