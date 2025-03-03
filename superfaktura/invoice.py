@@ -16,38 +16,35 @@ Functions:
     - (none)
 
 Usage:
-    import superfaktura.invoice
-
-    # Create an instance of Invoice
-    invoice = superfaktura.invoice.Invoice()
-
-    # Create an invoice
-    invoice.add(
-        invoice=superfaktura.invoice.InvoiceModel(
-            type=superfaktura.invoice.InvoiceType.PROFORMA,
-            name="Invoice 3",
-            due=superfaktura.invoice.Date("2025-02-01"),
-            invoice_currency=superfaktura.invoice.Currencies.CZK,
+    >>> import superfaktura.invoice
+    >>> # Create an instance of Invoice
+    >>> invoice = superfaktura.invoice.Invoice()
+    >>> # Create an invoice
+    >>> invoice.add(
+        invoice_model=InvoiceModel(
+            type=InvoiceType.INVOICE,
+            name="My First Invoice",
+            due=Date("2025-04-01"),
+            invoice_currency=Currencies.EUR,
             header_comment="We invoice you for services",
             bank_accounts=[bank.default().as_dict()],
         ),
         items=[
-            superfaktura.invoice.InvoiceItem(name="Services", unit_price=100, quantity=1,
-                                            unit="ks", tax=21),
-            superfaktura.invoice.InvoiceItem(name="SIM card", unit_price=50, quantity=1,
-                                            tax=21, unit="ks"),
-            superfaktura.invoice.InvoiceItem(
-                name="SIM card 2", unit_price=75, quantity=1, tax=21, unit="ks"
+            InvoiceItem(
+                name="Website Development", unit_price=1000.0, quantity=1, tax=20
+            ),
+            InvoiceItem(
+                name="Hosting Service (1 year)", unit_price=500.0, quantity=1, tax=20
             ),
         ],
-        contact=superfaktura.client_contacts.ClientContactModel(
-            name="Richard Kubíček",
-            email="kubicekr@eledio.com",
-            phone="+420 123 456 789",
-            address="Jaroslava Foglara 861/1",
-            ico="123",
+        contact=ClientContactModel(
+            name="John Doe",
+            email="john.doe@examle.com",
+            phone="+1 555-1234",
+            address="123 Main Street, New York",
+            ico="987654321",
             update=True,
-            country_id=57,
+            country_id=225,
         ),
     )
 """
@@ -217,31 +214,32 @@ class Invoice(SuperFakturaAPI):
         - update: Updates an existing invoice.
 
     Usage:
-        invoice = Invoice()
-        invoice.add(
-            invoice=InvoiceModel(
-                type=InvoiceType.PROFORMA,
-                name="Invoice 3",
-                due=Date("2025-02-01"),
-                invoice_currency=Currencies.CZK,
+        >>> invoice = Invoice()
+        >>> invoice.add(
+            invoice_model=InvoiceModel(
+                type=InvoiceType.INVOICE,
+                name="My First Invoice",
+                due=Date("2025-04-01"),
+                invoice_currency=Currencies.EUR,
                 header_comment="We invoice you for services",
                 bank_accounts=[bank.default().as_dict()],
             ),
             items=[
-                InvoiceItem(name="Services", unit_price=100, quantity=1, unit="ks", tax=21),
-                InvoiceItem(name="SIM card", unit_price=50, quantity=1, tax=21, unit="ks"),
                 InvoiceItem(
-                    name="SIM card 2", unit_price=75, quantity=1, tax=21, unit="ks"
+                    name="Website Development", unit_price=1000.0, quantity=1, tax=20
+                ),
+                InvoiceItem(
+                    name="Hosting Service (1 year)", unit_price=500.0, quantity=1, tax=20
                 ),
             ],
             contact=ClientContactModel(
-                name="Richard Kubíček",
-                email="kubicekr@eledio.com",
-                phone="+420 123 456 789",
-                address="Jaroslava Foglara 861/1",
-                ico="123",
+                name="John Doe",
+                email="john.doe@examle.com",
+                phone="+1 555-1234",
+                address="123 Main Street, New York",
+                ico="987654321",
                 update=True,
-                country_id=57,
+                country_id=225,
             ),
         )
     """
