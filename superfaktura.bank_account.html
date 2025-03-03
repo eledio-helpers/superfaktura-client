@@ -89,16 +89,18 @@ It allows for retrieving, creating, updating, and deleting bank accounts.</p>
 <li><p>(none)</p></li>
 </ul>
 </dd>
-<dt>Usage:</dt><dd><p>import superfaktura.bank_account</p>
-<p># Create an instance of BankAccount
-bank = superfaktura.bank_account.BankAccount()</p>
-<p># Retrieve a list of bank accounts
-accounts = bank.list()</p>
-<p># Get the default bank account
-default_account = bank.default()</p>
-<p># Create or update a bank account
-data = {“account”: “1234567890”, “bank_code”: “1234567890”, “default”: True}
-bank.post(data)</p>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">superfaktura.bank_account</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an instance of BankAccount</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span> <span class="o">=</span> <span class="n">superfaktura</span><span class="o">.</span><span class="n">bank_account</span><span class="o">.</span><span class="n">BankAccount</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Retrieve a list of bank accounts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accounts</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get the default bank account</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_account</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create or update a bank account</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;account&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;bank_code&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py class">
@@ -126,12 +128,14 @@ It allows for retrieving, creating, updating, and deleting bank accounts.</p>
 <dd><p>Creates or updates a bank account.</p>
 </dd></dl>
 
-<dl class="simple">
-<dt>Usage:</dt><dd><p>bank = BankAccount()
-accounts = bank.list()
-default_account = bank.default()
-data = {“account”: “1234567890”, “bank_code”: “1234567890”, “default”: True}
-bank.post(data)</p>
+<dl>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span> <span class="o">=</span> <span class="n">BankAccount</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accounts</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_account</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;account&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;bank_code&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py method">

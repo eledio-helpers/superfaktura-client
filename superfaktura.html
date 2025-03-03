@@ -267,16 +267,18 @@ It allows for retrieving, creating, updating, and deleting bank accounts.</p>
 <li><p>(none)</p></li>
 </ul>
 </dd>
-<dt>Usage:</dt><dd><p>import superfaktura.bank_account</p>
-<p># Create an instance of BankAccount
-bank = superfaktura.bank_account.BankAccount()</p>
-<p># Retrieve a list of bank accounts
-accounts = bank.list()</p>
-<p># Get the default bank account
-default_account = bank.default()</p>
-<p># Create or update a bank account
-data = {“account”: “1234567890”, “bank_code”: “1234567890”, “default”: True}
-bank.post(data)</p>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">superfaktura.bank_account</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an instance of BankAccount</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span> <span class="o">=</span> <span class="n">superfaktura</span><span class="o">.</span><span class="n">bank_account</span><span class="o">.</span><span class="n">BankAccount</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Retrieve a list of bank accounts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accounts</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get the default bank account</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_account</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create or update a bank account</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;account&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;bank_code&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py class">
@@ -304,12 +306,14 @@ It allows for retrieving, creating, updating, and deleting bank accounts.</p>
 <dd><p>Creates or updates a bank account.</p>
 </dd></dl>
 
-<dl class="simple">
-<dt>Usage:</dt><dd><p>bank = BankAccount()
-accounts = bank.list()
-default_account = bank.default()
-data = {“account”: “1234567890”, “bank_code”: “1234567890”, “default”: True}
-bank.post(data)</p>
+<dl>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span> <span class="o">=</span> <span class="n">BankAccount</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accounts</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">default_account</span> <span class="o">=</span> <span class="n">bank</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;account&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;bank_code&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bank</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py method">
@@ -647,48 +651,39 @@ It allows for retrieving, creating, updating, and deleting invoices.</p>
 <li><p>(none)</p></li>
 </ul>
 </dd>
-<dt>Usage:</dt><dd><p>import superfaktura.invoice</p>
-<p># Create an instance of Invoice
-invoice = superfaktura.invoice.Invoice()</p>
-<p># Create an invoice
-invoice.add(</p>
-<blockquote>
-<div><dl class="simple">
-<dt>invoice=superfaktura.invoice.InvoiceModel(</dt><dd><p>type=superfaktura.invoice.InvoiceType.PROFORMA,
-name=”Invoice 3”,
-due=superfaktura.invoice.Date(“2025-02-01”),
-invoice_currency=superfaktura.invoice.Currencies.CZK,
-header_comment=”We invoice you for services”,
-bank_accounts=[bank.default().as_dict()],</p>
-</dd>
-</dl>
-<p>),
-items=[</p>
-<blockquote>
-<div><dl class="simple">
-<dt>superfaktura.invoice.InvoiceItem(name=”Services”, unit_price=100, quantity=1,</dt><dd><p>unit=”ks”, tax=21),</p>
-</dd>
-<dt>superfaktura.invoice.InvoiceItem(name=”SIM card”, unit_price=50, quantity=1,</dt><dd><p>tax=21, unit=”ks”),</p>
-</dd>
-<dt>superfaktura.invoice.InvoiceItem(</dt><dd><p>name=”SIM card 2”, unit_price=75, quantity=1, tax=21, unit=”ks”</p>
-</dd>
-</dl>
-<p>),</p>
-</div></blockquote>
-<p>],
-contact=superfaktura.client_contacts.ClientContactModel(</p>
-<blockquote>
-<div><p>name=”Richard Kubíček”,
-email=”<a class="reference external" href="mailto:kubicekr&#37;&#52;&#48;eledio&#46;com">kubicekr<span>&#64;</span>eledio<span>&#46;</span>com</a>”,
-phone=”+420 123 456 789”,
-address=”Jaroslava Foglara 861/1”,
-ico=”123”,
-update=True,
-country_id=57,</p>
-</div></blockquote>
-<p>),</p>
-</div></blockquote>
-<p>)</p>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">superfaktura.invoice</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an instance of Invoice</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">invoice</span> <span class="o">=</span> <span class="n">superfaktura</span><span class="o">.</span><span class="n">invoice</span><span class="o">.</span><span class="n">Invoice</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an invoice</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">invoice</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+<span class="go">    invoice_model=InvoiceModel(</span>
+<span class="go">        type=InvoiceType.INVOICE,</span>
+<span class="go">        name=&quot;My First Invoice&quot;,</span>
+<span class="go">        due=Date(&quot;2025-04-01&quot;),</span>
+<span class="go">        invoice_currency=Currencies.EUR,</span>
+<span class="go">        header_comment=&quot;We invoice you for services&quot;,</span>
+<span class="go">        bank_accounts=[bank.default().as_dict()],</span>
+<span class="go">    ),</span>
+<span class="go">    items=[</span>
+<span class="go">        InvoiceItem(</span>
+<span class="go">            name=&quot;Website Development&quot;, unit_price=1000.0, quantity=1, tax=20</span>
+<span class="go">        ),</span>
+<span class="go">        InvoiceItem(</span>
+<span class="go">            name=&quot;Hosting Service (1 year)&quot;, unit_price=500.0, quantity=1, tax=20</span>
+<span class="go">        ),</span>
+<span class="go">    ],</span>
+<span class="go">    contact=ClientContactModel(</span>
+<span class="go">        name=&quot;John Doe&quot;,</span>
+<span class="go">        email=&quot;john.doe@examle.com&quot;,</span>
+<span class="go">        phone=&quot;+1 555-1234&quot;,</span>
+<span class="go">        address=&quot;123 Main Street, New York&quot;,</span>
+<span class="go">        ico=&quot;987654321&quot;,</span>
+<span class="go">        update=True,</span>
+<span class="go">        country_id=225,</span>
+<span class="go">    ),</span>
+<span class="go">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py class">
@@ -723,43 +718,36 @@ It allows for retrieving, creating, updating, and deleting invoices.</p>
 </dd></dl>
 
 <dl>
-<dt>Usage:</dt><dd><p>invoice = Invoice()
-invoice.add(</p>
-<blockquote>
-<div><dl class="simple">
-<dt>invoice=InvoiceModel(</dt><dd><p>type=InvoiceType.PROFORMA,
-name=”Invoice 3”,
-due=Date(“2025-02-01”),
-invoice_currency=Currencies.CZK,
-header_comment=”We invoice you for services”,
-bank_accounts=[bank.default().as_dict()],</p>
-</dd>
-</dl>
-<p>),
-items=[</p>
-<blockquote>
-<div><p>InvoiceItem(name=”Services”, unit_price=100, quantity=1, unit=”ks”, tax=21),
-InvoiceItem(name=”SIM card”, unit_price=50, quantity=1, tax=21, unit=”ks”),
-InvoiceItem(</p>
-<blockquote>
-<div><p>name=”SIM card 2”, unit_price=75, quantity=1, tax=21, unit=”ks”</p>
-</div></blockquote>
-<p>),</p>
-</div></blockquote>
-<p>],
-contact=ClientContactModel(</p>
-<blockquote>
-<div><p>name=”Richard Kubíček”,
-email=”<a class="reference external" href="mailto:kubicekr&#37;&#52;&#48;eledio&#46;com">kubicekr<span>&#64;</span>eledio<span>&#46;</span>com</a>”,
-phone=”+420 123 456 789”,
-address=”Jaroslava Foglara 861/1”,
-ico=”123”,
-update=True,
-country_id=57,</p>
-</div></blockquote>
-<p>),</p>
-</div></blockquote>
-<p>)</p>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">invoice</span> <span class="o">=</span> <span class="n">Invoice</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">invoice</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+<span class="go">    invoice_model=InvoiceModel(</span>
+<span class="go">        type=InvoiceType.INVOICE,</span>
+<span class="go">        name=&quot;My First Invoice&quot;,</span>
+<span class="go">        due=Date(&quot;2025-04-01&quot;),</span>
+<span class="go">        invoice_currency=Currencies.EUR,</span>
+<span class="go">        header_comment=&quot;We invoice you for services&quot;,</span>
+<span class="go">        bank_accounts=[bank.default().as_dict()],</span>
+<span class="go">    ),</span>
+<span class="go">    items=[</span>
+<span class="go">        InvoiceItem(</span>
+<span class="go">            name=&quot;Website Development&quot;, unit_price=1000.0, quantity=1, tax=20</span>
+<span class="go">        ),</span>
+<span class="go">        InvoiceItem(</span>
+<span class="go">            name=&quot;Hosting Service (1 year)&quot;, unit_price=500.0, quantity=1, tax=20</span>
+<span class="go">        ),</span>
+<span class="go">    ],</span>
+<span class="go">    contact=ClientContactModel(</span>
+<span class="go">        name=&quot;John Doe&quot;,</span>
+<span class="go">        email=&quot;john.doe@examle.com&quot;,</span>
+<span class="go">        phone=&quot;+1 555-1234&quot;,</span>
+<span class="go">        address=&quot;123 Main Street, New York&quot;,</span>
+<span class="go">        ico=&quot;987654321&quot;,</span>
+<span class="go">        update=True,</span>
+<span class="go">        country_id=225,</span>
+<span class="go">    ),</span>
+<span class="go">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py method">
@@ -1261,13 +1249,15 @@ It allows for reading, creating, updating, and deleting data in SuperFaktura.</p
 <li><p>post: Creates or updates data in the SuperFaktura API.</p></li>
 </ul>
 </dd>
-<dt>Usage:</dt><dd><p>import superfaktura.superfaktura_api</p>
-<p># Create an instance of SuperFakturaAPI
-api = superfaktura.superfaktura_api.SuperFakturaAPI()</p>
-<p># Retrieve data from the SuperFaktura API
-data = api.get(‘endpoint’)</p>
-<p># Create or update data in the SuperFaktura API
-api.post(‘endpoint’, data)</p>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">superfaktura.superfaktura_api</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an instance of SuperFakturaAPI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api</span> <span class="o">=</span> <span class="n">superfaktura</span><span class="o">.</span><span class="n">superfaktura_api</span><span class="o">.</span><span class="n">SuperFakturaAPI</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Retrieve data from the SuperFaktura API</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">incoming_data</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;endpoint&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create or update data in the SuperFaktura API</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;endpoint&#39;</span><span class="p">,</span> <span class="n">outgoing_data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py class">

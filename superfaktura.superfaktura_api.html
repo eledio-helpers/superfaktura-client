@@ -87,13 +87,15 @@ It allows for reading, creating, updating, and deleting data in SuperFaktura.</p
 <li><p>post: Creates or updates data in the SuperFaktura API.</p></li>
 </ul>
 </dd>
-<dt>Usage:</dt><dd><p>import superfaktura.superfaktura_api</p>
-<p># Create an instance of SuperFakturaAPI
-api = superfaktura.superfaktura_api.SuperFakturaAPI()</p>
-<p># Retrieve data from the SuperFaktura API
-data = api.get(‘endpoint’)</p>
-<p># Create or update data in the SuperFaktura API
-api.post(‘endpoint’, data)</p>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">superfaktura.superfaktura_api</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an instance of SuperFakturaAPI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api</span> <span class="o">=</span> <span class="n">superfaktura</span><span class="o">.</span><span class="n">superfaktura_api</span><span class="o">.</span><span class="n">SuperFakturaAPI</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Retrieve data from the SuperFaktura API</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">incoming_data</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;endpoint&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create or update data in the SuperFaktura API</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">api</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;endpoint&#39;</span><span class="p">,</span> <span class="n">outgoing_data</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 <dl class="py class">
