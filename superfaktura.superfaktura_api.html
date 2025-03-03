@@ -43,7 +43,6 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="superfaktura.html">SuperFaktura API client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples of SuperFaktura API client usage</a></li>
 </ul>
 
         </div>
@@ -103,7 +102,7 @@ api.post(‘endpoint’, data)</p>
 <p>Base class for working with the SuperFaktura API.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="superfaktura.superfaktura_api.SuperFakturaAPI.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#superfaktura.superfaktura_api.SuperFakturaAPI.get" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#superfaktura.superfaktura_api.SuperFakturaAPI.get" title="Link to this definition"></a></dt>
 <dd><p>Retrieves data from the SuperFaktura API.</p>
 <p>Retrieves data from the specified endpoint in the SuperFaktura API.</p>
 <dl class="field-list simple">
@@ -115,10 +114,10 @@ etc.).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The retrieved data in bytes.</p>
+<dd class="field-even"><p>The retrieved data in JSON format.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bytes</p>
+<dd class="field-odd"><p>Dict</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#superfaktura.superfaktura_api.SuperFakturaAPIException" title="superfaktura.superfaktura_api.SuperFakturaAPIException"><strong>SuperFakturaAPIException</strong></a> – If the API request fails or returns an error.</p>
