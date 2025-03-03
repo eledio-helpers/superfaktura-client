@@ -32,8 +32,6 @@ from typing import Dict
 import requests
 from dotenv import load_dotenv  # type: ignore
 
-from superfaktura.enumerations.data_format import DataFormat
-
 
 class SuperFakturaAPIException(Exception):
     """Exception for errors when working with the SuperFaktura API."""
@@ -64,9 +62,7 @@ class SuperFakturaAPI:
             f"{_api_company_id}"
         }
 
-    def get(
-        self, endpoint: str, data_format: DataFormat = DataFormat.JSON, timeout: int = 5
-    ) -> Dict:
+    def get(self, endpoint: str, timeout: int = 5) -> bytes:
         """
         Retrieves data from the SuperFaktura API.
 
@@ -78,7 +74,7 @@ class SuperFakturaAPI:
             timeout (int, optional): The timeout for the API request in seconds. Defaults to 5.
 
         Returns:
-            Dict: The retrieved data in JSON format.
+            bytes: The retrieved data in bytes.
 
         Raises:
             SuperFakturaAPIException: If the API request fails or returns an error.
@@ -94,14 +90,9 @@ class SuperFakturaAPI:
         url = f"{self._api_url}/{endpoint}"
         req = requests.get(url=url, headers=self._auth_header, timeout=timeout)
         if req.status_code == 200:
-            if data_format == DataFormat.JSON:
-                return req.json()
-            elif data_format == DataFormat.PDF:
-                return {"pdf": req.content}  # returns a dict with the PDF content
-            else:
-                raise SuperFakturaAPIException("Invalid data format")
+            return req.content
         raise SuperFakturaAPIException(
-            f"Get status code: {req.status_code}; {req.json()}"
+            f"Get status code: {req.status_code}; {req.content!r}"
         )
 
     def post(self, endpoint: str, data: str, timeout: int = 5) -> Dict:

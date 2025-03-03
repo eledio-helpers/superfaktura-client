@@ -12,6 +12,8 @@ Usage:
     print(countries)
 """
 
+import json
+
 from superfaktura.superfaktura_api import SuperFakturaAPI
 
 
@@ -30,4 +32,5 @@ def country_list():
     """
     api = SuperFakturaAPI()
     url = "countries"
-    return api.get(url)
+    countries = api.get(url)
+    return json.loads(countries)

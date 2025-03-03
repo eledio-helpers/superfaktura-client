@@ -104,12 +104,14 @@ class ClientContact(SuperFakturaAPI):
     def list(self) -> dict:
         """Lists all exists client contacts."""
         url = "clients/index.json"
-        return self.get(endpoint=url)
+        clients = self.get(endpoint=url)
+        return json.loads(clients)
 
     def get_client(self, client_id: int) -> ClientContactModel:
         """Gets a client contact by ID."""
         url = f"clients/view/{client_id}"
-        data = self.get(endpoint=url)
+        clients = self.get(endpoint=url)
+        data = json.loads(clients)
         if "Client" not in data:
             raise ClientException("Client not found")
         data = data["Client"]
@@ -122,4 +124,4 @@ if __name__ == "__main__":
 
     pprint(resp)
 
-    pprint(client.get_client(40019))
+    pprint(client.get_client(40011))

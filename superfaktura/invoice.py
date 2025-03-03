@@ -57,7 +57,6 @@ from typing import Optional, List
 import json
 
 from superfaktura.client_contacts import ClientContactModel
-from superfaktura.enumerations.data_format import DataFormat
 from superfaktura.enumerations.language import Language
 from superfaktura.superfaktura_api import SuperFakturaAPI
 from superfaktura.utils.data_types import Date, DateEncoder
@@ -255,7 +254,7 @@ class Invoice(SuperFakturaAPI):
         invoice_model: InvoiceModel,
         items: List[InvoiceItem],
         contact: ClientContactModel,
-        invoice_settings: Optional[InvoiceSettings],
+        invoice_settings: Optional[InvoiceSettings] = None,
     ) -> InvoiceRespModel:
         """
         Adds a new invoice.
@@ -277,7 +276,7 @@ class Invoice(SuperFakturaAPI):
             "Invoice": invoice_model.as_dict(),
             "InvoiceItem": [item.as_dict() for item in items],
             "Client": contact.as_dict(),
-            "InvoiceSetting": invoice_settings.as_dict(),
+            "InvoiceSetting": invoice_settings.as_dict() if invoice_settings else {},
         }
         url = "invoices/create"
         resp = self.post(endpoint=url, data=json.dumps(data, cls=DateEncoder))
@@ -304,5 +303,5 @@ class Invoice(SuperFakturaAPI):
             bytes: A bytes containing the PDF data.
         """
         url = f"{language}/invoices/pdf/{invoice.invoice_id}/token:{invoice.invoice_token}"
-        document = self.get(url, data_format=DataFormat.PDF)["pdf"]
+        document = self.get(url)
         return document
