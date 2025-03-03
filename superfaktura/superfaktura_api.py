@@ -14,16 +14,13 @@ Functions:
     - post: Creates or updates data in the SuperFaktura API.
 
 Usage:
-    import superfaktura.superfaktura_api
-
-    # Create an instance of SuperFakturaAPI
-    api = superfaktura.superfaktura_api.SuperFakturaAPI()
-
-    # Retrieve data from the SuperFaktura API
-    data = api.get('endpoint')
-
-    # Create or update data in the SuperFaktura API
-    api.post('endpoint', data)
+    >>> import superfaktura.superfaktura_api
+    >>> # Create an instance of SuperFakturaAPI
+    >>> api = superfaktura.superfaktura_api.SuperFakturaAPI()
+    >>> # Retrieve data from the SuperFaktura API
+    >>> incoming_data = api.get('endpoint')
+    >>> # Create or update data in the SuperFaktura API
+    >>> api.post('endpoint', outgoing_data)
 """
 
 import os
