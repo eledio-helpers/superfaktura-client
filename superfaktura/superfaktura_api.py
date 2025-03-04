@@ -91,8 +91,11 @@ class SuperFakturaAPI:
                 return req.json()
             except requests.exceptions.JSONDecodeError as e:
                 raise SuperFakturaAPIException(
-                    f"Get status code: {req.status_code}; {req.content}; {e}"
+                    f"Unable to decode response as JSON; {req.content!r}; {e}"
                 )
+        raise SuperFakturaAPIException(
+            f"Get status code: {req.status_code}; {req.content!r}"
+        )
 
     def post(self, endpoint: str, data: str, timeout: int = 5) -> Dict:
         """
