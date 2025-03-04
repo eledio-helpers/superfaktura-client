@@ -1,0 +1,5 @@
+[lint]
+ignore = [
+    # Use a single `if` statement instead of nested `if` statements
+    "SIM102",
+]

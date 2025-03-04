@@ -6,3 +6,4 @@ Welcome to SuperFaktura Client's documentation
 
    superfaktura
    installation
+   examples

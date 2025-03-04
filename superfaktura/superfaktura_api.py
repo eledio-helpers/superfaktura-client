@@ -14,20 +14,17 @@ Functions:
     - post: Creates or updates data in the SuperFaktura API.
 
 Usage:
-    import superfaktura.superfaktura_api
-
-    # Create an instance of SuperFakturaAPI
-    api = superfaktura.superfaktura_api.SuperFakturaAPI()
-
-    # Retrieve data from the SuperFaktura API
-    data = api.get('endpoint')
-
-    # Create or update data in the SuperFaktura API
-    api.post('endpoint', data)
+    >>> import superfaktura.superfaktura_api
+    >>> # Create an instance of SuperFakturaAPI
+    >>> api = superfaktura.superfaktura_api.SuperFakturaAPI()
+    >>> # Retrieve data from the SuperFaktura API
+    >>> incoming_data = api.get('endpoint')
+    >>> # Create or update data in the SuperFaktura API
+    >>> api.post('endpoint', outgoing_data)
 """
 
 import os
-from typing import Dict
+from typing import Dict, IO
 
 import requests
 from dotenv import load_dotenv  # type: ignore
@@ -90,10 +87,55 @@ class SuperFakturaAPI:
         url = f"{self._api_url}/{endpoint}"
         req = requests.get(url=url, headers=self._auth_header, timeout=timeout)
         if req.status_code == 200:
-            return req.json()
+            try:
+                return req.json()
+            except requests.exceptions.JSONDecodeError as e:
+                raise SuperFakturaAPIException(
+                    f"Unable to decode response as JSON; {req.content!r}; {e}"
+                ) from e
         raise SuperFakturaAPIException(
-            f"Get status code: {req.status_code}; {req.json()}"
+            f"Get status code: {req.status_code}; {req.content!r}"
         )
+
+    def download(self, endpoint: str, descriptor: IO[bytes], timeout: int = 5) -> None:
+        """
+        Download data stream from the SuperFaktura API.
+
+        Download data stream from the specified endpoint in the SuperFaktura API.
+
+        Args:
+            endpoint (str): The API endpoint to retrieve data from (e.g. 'invoices', 'clients',
+                            etc.).
+            descriptor (IO[bytes]): The descriptor to write the data stream to.
+            timeout (int, optional): The timeout for the API request in seconds. Defaults to 5.
+
+        Returns:
+            None
+
+        Raises:
+            SuperFakturaAPIException: If the API request fails or returns an error.
+
+        Examples:
+            >>> api = SuperFakturaAPI()
+            >>> with open("data.pdf", "wb") as f:
+            >>>     api.download("some/endpoint", descriptor=f)
+
+        Notes:
+            The available endpoints can be found in the SuperFaktura API documentation.
+        """
+        url = f"{self._api_url}/{endpoint}"
+        req = requests.get(url=url, headers=self._auth_header, timeout=timeout)
+        if req.status_code == 200:
+            if descriptor.writable():
+                descriptor.write(req.content)
+            else:
+                raise SuperFakturaAPIException(
+                    f"Descriptor {descriptor} is not writable"
+                )
+        else:
+            raise SuperFakturaAPIException(
+                f"Download status code: {req.status_code}; {req.content!r}"
+            )
 
     def post(self, endpoint: str, data: str, timeout: int = 5) -> Dict:
         """

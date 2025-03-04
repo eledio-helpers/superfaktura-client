@@ -16,49 +16,45 @@ Functions:
     - (none)
 
 Usage:
-    import superfaktura.invoice
-
-    # Create an instance of Invoice
-    invoice = superfaktura.invoice.Invoice()
-
-    # Create an invoice
-    invoice.add(
-        invoice=superfaktura.invoice.InvoiceModel(
-            type=superfaktura.invoice.InvoiceType.PROFORMA,
-            name="Invoice 3",
-            due=superfaktura.invoice.Date("2025-02-01"),
-            invoice_currency=superfaktura.invoice.Currencies.CZK,
+    >>> import superfaktura.invoice
+    >>> # Create an instance of Invoice
+    >>> invoice = superfaktura.invoice.Invoice()
+    >>> # Create an invoice
+    >>> invoice.add(
+        invoice_model=InvoiceModel(
+            type=InvoiceType.INVOICE,
+            name="My First Invoice",
+            due=Date("2025-04-01"),
+            invoice_currency=Currencies.EUR,
             header_comment="We invoice you for services",
             bank_accounts=[bank.default().as_dict()],
         ),
         items=[
-            superfaktura.invoice.InvoiceItem(name="Services", unit_price=100, quantity=1,
-                                            unit="ks", tax=21),
-            superfaktura.invoice.InvoiceItem(name="SIM card", unit_price=50, quantity=1,
-                                            tax=21, unit="ks"),
-            superfaktura.invoice.InvoiceItem(
-                name="SIM card 2", unit_price=75, quantity=1, tax=21, unit="ks"
+            InvoiceItem(
+                name="Website Development", unit_price=1000.0, quantity=1, tax=20
+            ),
+            InvoiceItem(
+                name="Hosting Service (1 year)", unit_price=500.0, quantity=1, tax=20
             ),
         ],
-        contact=superfaktura.client_contacts.ClientContactModel(
-            name="Richard Kubíček",
-            email="kubicekr@eledio.com",
-            phone="+420 123 456 789",
-            address="Jaroslava Foglara 861/1",
-            ico="123",
+        contact=ClientContactModel(
+            name="John Doe",
+            email="john.doe@examle.com",
+            phone="+1 555-1234",
+            address="123 Main Street, New York",
+            ico="987654321",
             update=True,
-            country_id=57,
+            country_id=225,
         ),
     )
 """
 
 from dataclasses import dataclass, asdict
-from typing import Optional, List
+from typing import Optional, List, IO
 import json
 
-from superfaktura.bank_account import BankAccount
 from superfaktura.client_contacts import ClientContactModel
-from superfaktura.enumerations.currency import Currencies
+from superfaktura.enumerations.language import Language
 from superfaktura.superfaktura_api import SuperFakturaAPI
 from superfaktura.utils.data_types import Date, DateEncoder
 
@@ -147,8 +143,51 @@ class InvoiceItem:
         return data
 
 
+@dataclass
+class InvoiceRespModel:
+    """
+    This dataclass represents the response model for an invoice in the SuperFaktura API.
+
+    Attributes:
+        - error (int): The error code.
+        - error_message (str): The error message.
+        - invoice_id (Optional[int]): The ID of the invoice.
+        - invoice_token (Optional[str]): The token of the invoice.
+    """
+
+    error: int
+    error_message: str
+    invoice_id: Optional[int] = None
+    invoice_token: Optional[str] = None
+
+
+@dataclass
+class InvoiceSettings:
+    """
+    This dataclass represents the settings for an invoice in the SuperFaktura API.
+    """
+
+    language: Optional[str] = None
+    bysquare: Optional[bool] = None
+    callback_payment: Optional[str] = None
+    online_payment: Optional[bool] = None
+    payment_info: Optional[bool] = None
+    paypal: Optional[bool] = None
+    show_prices: Optional[bool] = None
+    signature: Optional[bool] = None
+    summary_bg_color: Optional[str] = None
+
+    def as_dict(self) -> dict:
+        """Returns a dictionary representation of the InvoiceSettings."""
+        data = asdict(self)
+        for key in list(data.keys()):
+            if data[key] is None:
+                del data[key]
+        return data
+
+
 class InvoiceType:
-    """ "
+    """
     Invoice Type Enumeration.
 
     This enumeration represents the different types of invoices that can be created.
@@ -175,31 +214,32 @@ class Invoice(SuperFakturaAPI):
         - update: Updates an existing invoice.
 
     Usage:
-        invoice = Invoice()
-        invoice.add(
-            invoice=InvoiceModel(
-                type=InvoiceType.PROFORMA,
-                name="Invoice 3",
-                due=Date("2025-02-01"),
-                invoice_currency=Currencies.CZK,
+        >>> invoice = Invoice()
+        >>> invoice.add(
+            invoice_model=InvoiceModel(
+                type=InvoiceType.INVOICE,
+                name="My First Invoice",
+                due=Date("2025-04-01"),
+                invoice_currency=Currencies.EUR,
                 header_comment="We invoice you for services",
                 bank_accounts=[bank.default().as_dict()],
             ),
             items=[
-                InvoiceItem(name="Services", unit_price=100, quantity=1, unit="ks", tax=21),
-                InvoiceItem(name="SIM card", unit_price=50, quantity=1, tax=21, unit="ks"),
                 InvoiceItem(
-                    name="SIM card 2", unit_price=75, quantity=1, tax=21, unit="ks"
+                    name="Website Development", unit_price=1000.0, quantity=1, tax=20
+                ),
+                InvoiceItem(
+                    name="Hosting Service (1 year)", unit_price=500.0, quantity=1, tax=20
                 ),
             ],
             contact=ClientContactModel(
-                name="Richard Kubíček",
-                email="kubicekr@eledio.com",
-                phone="+420 123 456 789",
-                address="Jaroslava Foglara 861/1",
-                ico="123",
+                name="John Doe",
+                email="john.doe@example.com",
+                phone="+1 555-1234",
+                address="123 Main Street, New York",
+                ico="987654321",
                 update=True,
-                country_id=57,
+                country_id=225,
             ),
         )
     """
@@ -212,44 +252,53 @@ class Invoice(SuperFakturaAPI):
         invoice_model: InvoiceModel,
         items: List[InvoiceItem],
         contact: ClientContactModel,
-    ):
-        """Creates a new invoice."""
+        invoice_settings: Optional[InvoiceSettings] = None,
+    ) -> InvoiceRespModel:
+        """
+        Adds a new invoice.
+
+        Args:
+            invoice_model (InvoiceModel): The invoice model.
+            items (List[InvoiceItem]): List of invoice items.
+            contact (ClientContactModel): The client contact model.
+            invoice_settings (Optional[InvoiceSettings]): The invoice settings.
+
+        Returns:
+            InvoiceRespModel: The response model for the invoice.
+        """
         data = {
             "Invoice": invoice_model.as_dict(),
             "InvoiceItem": [item.as_dict() for item in items],
             "Client": contact.as_dict(),
+            "InvoiceSetting": invoice_settings.as_dict() if invoice_settings else {},
         }
         url = "invoices/create"
         resp = self.post(endpoint=url, data=json.dumps(data, cls=DateEncoder))
-        return resp
+        invoice_resp = InvoiceRespModel(
+            error=resp["error"], error_message=resp["error_message"]
+        )
+        if "data" in resp:
+            if "Invoice" in resp["data"]:
+                invoice_resp.invoice_id = int(resp["data"]["Invoice"]["id"])
+                invoice_resp.invoice_token = resp["data"]["Invoice"]["token"]
+        return invoice_resp
 
+    def get_pdf(
+        self,
+        invoice: InvoiceRespModel,
+        descriptor: IO[bytes],
+        language: str = Language.Czech,
+    ) -> None:
+        """
+        Retrieves the PDF of the invoice.
 
-if __name__ == "__main__":
-    invoice = Invoice()
-    bank = BankAccount()
-    invoice.add(
-        invoice_model=InvoiceModel(
-            type=InvoiceType.PROFORMA,
-            name="Invoice 3",
-            due=Date("2025-02-01"),
-            invoice_currency=Currencies.CZK,
-            header_comment="We invoice you for services",
-            bank_accounts=[bank.default().as_dict()],
-        ),
-        items=[
-            InvoiceItem(name="Services", unit_price=100, quantity=1, unit="ks", tax=21),
-            InvoiceItem(name="SIM card", unit_price=50, quantity=1, tax=21, unit="ks"),
-            InvoiceItem(
-                name="SIM card 2", unit_price=75, quantity=1, tax=21, unit="ks"
-            ),
-        ],
-        contact=ClientContactModel(
-            name="Richard Kubíček",
-            email="kubicekr@eledio.com",
-            phone="+420 123 456 789",
-            address="Jaroslava Foglara 861/1",
-            ico="123",
-            update=True,
-            country_id=57,
-        ),
-    )
+        Args:
+            invoice (InvoiceRespModel): The response model for the invoice.
+            descriptor (IO[bytes]): The descriptor to write the PDF data to.
+            language (str): The language for the PDF.
+
+        Returns:
+            None
+        """
+        url = f"{language}/invoices/pdf/{invoice.invoice_id}/token:{invoice.invoice_token}"
+        self.download(url, descriptor)
