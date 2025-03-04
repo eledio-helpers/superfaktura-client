@@ -59,7 +59,7 @@ class SuperFakturaAPI:
             f"{_api_company_id}"
         }
 
-    def get(self, endpoint: str, timeout: int = 5) -> bytes:
+    def get(self, endpoint: str, timeout: int = 5) -> Dict:
         """
         Retrieves data from the SuperFaktura API.
 
@@ -71,7 +71,7 @@ class SuperFakturaAPI:
             timeout (int, optional): The timeout for the API request in seconds. Defaults to 5.
 
         Returns:
-            bytes: The retrieved data in bytes.
+            Dict: The retrieved data in JSON format.
 
         Raises:
             SuperFakturaAPIException: If the API request fails or returns an error.
@@ -87,10 +87,12 @@ class SuperFakturaAPI:
         url = f"{self._api_url}/{endpoint}"
         req = requests.get(url=url, headers=self._auth_header, timeout=timeout)
         if req.status_code == 200:
-            return req.content
-        raise SuperFakturaAPIException(
-            f"Get status code: {req.status_code}; {req.content!r}"
-        )
+            try:
+                return req.json()
+            except requests.exceptions.JSONDecodeError as e:
+                raise SuperFakturaAPIException(
+                    f"Get status code: {req.status_code}; {req.content}; {e}"
+                )
 
     def post(self, endpoint: str, data: str, timeout: int = 5) -> Dict:
         """
