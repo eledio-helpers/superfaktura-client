@@ -152,7 +152,7 @@ class InvoiceRespModel:
         - error (int): The error code.
         - error_message (str): The error message.
         - invoice_id (Optional[int]): The ID of the invoice.
-        - invoice_token (Optional[str]): The token of
+        - invoice_token (Optional[str]): The token of the invoice.
     """
 
     error: int
@@ -178,7 +178,7 @@ class InvoiceSettings:
     summary_bg_color: Optional[str] = None
 
     def as_dict(self) -> dict:
-        """Returns a dictionary representation of the ClientContactModel."""
+        """Returns a dictionary representation of the InvoiceSettings."""
         data = asdict(self)
         for key in list(data.keys()):
             if data[key] is None:
@@ -265,10 +265,6 @@ class Invoice(SuperFakturaAPI):
 
         Returns:
             InvoiceRespModel: The response model for the invoice.
-            :param invoice_settings:
-            :param contact:
-            :param items:
-            :param invoice_model:
         """
         data = {
             "Invoice": invoice_model.as_dict(),
