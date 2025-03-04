@@ -21,7 +21,7 @@ Dependencies:
     - superfaktura.utils.data_types.Date
 """
 
-from superfaktura.bank_account import BankAccount
+from superfaktura.bank_account import BankAccount, NoDefaultBankAccountException
 from superfaktura.client_contacts import ClientContactModel
 from superfaktura.enumerations.currency import Currencies
 from superfaktura.enumerations.language import Language
@@ -41,6 +41,12 @@ def main():
     """
     invoice = Invoice()
     bank = BankAccount()
+    try:
+        # Get default bank account
+        bank_account = bank.default().as_dict()
+    except NoDefaultBankAccountException as e:
+        print(f"Error getting default bank account: {e}")
+        bank_account = {}
     resp = invoice.add(
         invoice_model=InvoiceModel(
             type=InvoiceType.INVOICE,
@@ -48,7 +54,7 @@ def main():
             due=Date("2025-04-01"),
             invoice_currency=Currencies.EUR,
             header_comment="We invoice you for services",
-            bank_accounts=[bank.default().as_dict()],
+            bank_accounts=[bank_account],
         ),
         items=[
             InvoiceItem(
