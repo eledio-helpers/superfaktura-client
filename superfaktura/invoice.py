@@ -50,7 +50,7 @@ Usage:
 """
 
 from dataclasses import dataclass, asdict
-from typing import Optional, List
+from typing import Optional, List, IO
 import json
 
 from superfaktura.client_contacts import ClientContactModel
@@ -288,18 +288,21 @@ class Invoice(SuperFakturaAPI):
         return invoice_resp
 
     def get_pdf(
-        self, invoice: InvoiceRespModel, language: str = Language.Czech
-    ) -> bytes:
+        self,
+        invoice: InvoiceRespModel,
+        descriptor: IO[bytes],
+        language: str = Language.Czech,
+    ) -> None:
         """
         Retrieves the PDF of the invoice.
 
         Args:
             invoice (InvoiceRespModel): The response model for the invoice.
+            descriptor (IO[bytes]): The descriptor to write the PDF data to.
             language (str): The language for the PDF.
 
         Returns:
-            bytes: A bytes containing the PDF data.
+            None
         """
         url = f"{language}/invoices/pdf/{invoice.invoice_id}/token:{invoice.invoice_token}"
-        document = self.get(url)
-        return document
+        self.download(url, descriptor)

@@ -21,8 +21,6 @@ Dependencies:
     - superfaktura.utils.data_types.Date
 """
 
-from pathlib import Path
-
 from superfaktura.bank_account import BankAccount
 from superfaktura.client_contacts import ClientContactModel
 from superfaktura.enumerations.currency import Currencies
@@ -71,10 +69,9 @@ def main():
         ),
         invoice_settings=InvoiceSettings(language=Language.English),
     )
-    _pdf = invoice.get_pdf(invoice=resp, language=Language.English)
 
-    p = Path("invoice.pdf")
-    p.write_bytes(_pdf)
+    with open("invoice.pdf", "wb") as f:
+        invoice.get_pdf(invoice=resp, descriptor=f, language=Language.English)
 
 
 if __name__ == "__main__":
