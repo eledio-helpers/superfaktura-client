@@ -8,7 +8,6 @@ Usage:
     Run this script directly to create and save an invoice PDF.
 
 Dependencies:
-    - examples.tools.save_file_as_pdf
     - superfaktura.bank_account.BankAccount
     - superfaktura.client_contacts.ClientContactModel
     - superfaktura.enumerations.currency.Currencies
