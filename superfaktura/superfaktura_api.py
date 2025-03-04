@@ -92,7 +92,7 @@ class SuperFakturaAPI:
             except requests.exceptions.JSONDecodeError as e:
                 raise SuperFakturaAPIException(
                     f"Unable to decode response as JSON; {req.content!r}; {e}"
-                )
+                ) from e
         raise SuperFakturaAPIException(
             f"Get status code: {req.status_code}; {req.content!r}"
         )
