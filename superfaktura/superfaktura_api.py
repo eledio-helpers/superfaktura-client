@@ -116,11 +116,9 @@ class SuperFakturaAPI:
             SuperFakturaAPIException: If the API request fails or returns an error.
 
         Examples:
-            >>> from superfaktura.invoice import Invoice
-            >>> from superfaktura.enumerations.language import Language
-            >>> invoice = Invoice()
-            >>> with open("invoice.pdf", "wb") as f:
-            >>>     invoice.get_pdf(invoice=invoice_data, descriptor=f, language=Language.English)
+            >>> api = SuperFakturaAPI()
+            >>> with open("data.pdf", "wb") as f:
+            >>>     api.download("some/endpoint", descriptor=f)
 
         Notes:
             The available endpoints can be found in the SuperFaktura API documentation.
