@@ -208,6 +208,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-superfaktura.superfaktura_api">SuperFaktura API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#superfaktura.superfaktura_api.SuperFakturaAPI"><code class="docutils literal notranslate"><span class="pre">SuperFakturaAPI</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#superfaktura.superfaktura_api.SuperFakturaAPI.download"><code class="docutils literal notranslate"><span class="pre">SuperFakturaAPI.download()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#superfaktura.superfaktura_api.SuperFakturaAPI.get"><code class="docutils literal notranslate"><span class="pre">SuperFakturaAPI.get()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#superfaktura.superfaktura_api.SuperFakturaAPI.post"><code class="docutils literal notranslate"><span class="pre">SuperFakturaAPI.post()</span></code></a></li>
 </ul>
@@ -778,20 +779,18 @@ It allows for retrieving, creating, updating, and deleting invoices.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="superfaktura.invoice.Invoice.get_pdf">
-<span class="sig-name descname"><span class="pre">get_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">invoice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="superfaktura.invoice.html#superfaktura.invoice.InvoiceRespModel" title="superfaktura.invoice.InvoiceRespModel"><span class="pre">InvoiceRespModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cze'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#superfaktura.invoice.Invoice.get_pdf" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">invoice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="superfaktura.invoice.html#superfaktura.invoice.InvoiceRespModel" title="superfaktura.invoice.InvoiceRespModel"><span class="pre">InvoiceRespModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IO</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cze'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#superfaktura.invoice.Invoice.get_pdf" title="Link to this definition"></a></dt>
 <dd><p>Retrieves the PDF of the invoice.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>invoice</strong> (<a class="reference internal" href="superfaktura.invoice.html#superfaktura.invoice.InvoiceRespModel" title="superfaktura.invoice.InvoiceRespModel"><em>InvoiceRespModel</em></a>) – The response model for the invoice.</p></li>
+<li><p><strong>descriptor</strong> (<em>IO</em><em>[</em><em>bytes</em><em>]</em>) – The descriptor to write the PDF data to.</p></li>
 <li><p><strong>language</strong> (<em>str</em>) – The language for the PDF.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A bytes containing the PDF data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bytes</p>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1266,8 +1265,41 @@ It allows for reading, creating, updating, and deleting data in SuperFaktura.</p
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class for working with the SuperFaktura API.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="superfaktura.superfaktura_api.SuperFakturaAPI.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IO</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#superfaktura.superfaktura_api.SuperFakturaAPI.download" title="Link to this definition"></a></dt>
+<dd><p>Download data stream from the SuperFaktura API.</p>
+<p>Download data stream from the specified endpoint in the SuperFaktura API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> (<em>str</em>) – The API endpoint to retrieve data from (e.g. ‘invoices’, ‘clients’,
+etc.).</p></li>
+<li><p><strong>descriptor</strong> (<em>IO</em><em>[</em><em>bytes</em><em>]</em>) – The descriptor to write the data stream to.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em><em>, </em><em>optional</em>) – The timeout for the API request in seconds. Defaults to 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="superfaktura.superfaktura_api.html#superfaktura.superfaktura_api.SuperFakturaAPIException" title="superfaktura.superfaktura_api.SuperFakturaAPIException"><strong>SuperFakturaAPIException</strong></a> – If the API request fails or returns an error.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">superfaktura.invoice</span><span class="w"> </span><span class="kn">import</span> <span class="n">Invoice</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">superfaktura.enumerations.language</span><span class="w"> </span><span class="kn">import</span> <span class="n">Language</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">invoice</span> <span class="o">=</span> <span class="n">Invoice</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;invoice.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">invoice</span><span class="o">.</span><span class="n">get_pdf</span><span class="p">(</span><span class="n">invoice</span><span class="o">=</span><span class="n">invoice_data</span><span class="p">,</span> <span class="n">descriptor</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">Language</span><span class="o">.</span><span class="n">English</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>The available endpoints can be found in the SuperFaktura API documentation.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="superfaktura.superfaktura_api.SuperFakturaAPI.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="headerlink" href="#superfaktura.superfaktura_api.SuperFakturaAPI.get" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#superfaktura.superfaktura_api.SuperFakturaAPI.get" title="Link to this definition"></a></dt>
 <dd><p>Retrieves data from the SuperFaktura API.</p>
 <p>Retrieves data from the specified endpoint in the SuperFaktura API.</p>
 <dl class="field-list simple">
@@ -1279,10 +1311,10 @@ etc.).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The retrieved data in bytes.</p>
+<dd class="field-even"><p>The retrieved data in JSON format.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bytes</p>
+<dd class="field-odd"><p>Dict</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="superfaktura.superfaktura_api.html#superfaktura.superfaktura_api.SuperFakturaAPIException" title="superfaktura.superfaktura_api.SuperFakturaAPIException"><strong>SuperFakturaAPIException</strong></a> – If the API request fails or returns an error.</p>
