@@ -27,7 +27,6 @@ Usage:
     >>> bank.post(data)
 """
 
-import json
 from dataclasses import dataclass, asdict
 from typing import Optional
 
@@ -93,8 +92,7 @@ class BankAccount(SuperFakturaAPI):
     def list(self) -> dict:
         """Retrieves a list of bank accounts."""
         url = "bank_accounts/index"
-        bank_accounts = self.get(url)
-        return json.loads(bank_accounts)
+        return self.get(url)
 
     def default(self) -> Optional[BankAccountModel]:
         """Retrieves the default bank account."""
