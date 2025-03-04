@@ -234,7 +234,7 @@ class Invoice(SuperFakturaAPI):
             ],
             contact=ClientContactModel(
                 name="John Doe",
-                email="john.doe@examle.com",
+                email="john.doe@example.com",
                 phone="+1 555-1234",
                 address="123 Main Street, New York",
                 ico="987654321",
