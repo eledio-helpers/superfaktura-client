@@ -20,7 +20,7 @@ jobs:
         pip install pylint
     - name: pylint
       run: |
-        pylint $(git ls-files '*.py') --fail-under=9.0 --output-format=json > pylint-report.json
+        pylint $(git ls-files '*.py' | grep -v '^test/') --fail-under=9.0 --output-format=json > pylint-report.json
 
     - name: Generate Pylint Score
       id: pylint_score
