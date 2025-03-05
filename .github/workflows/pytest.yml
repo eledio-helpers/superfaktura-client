@@ -18,8 +18,8 @@ jobs:
         pip install -r requirements_dev.txt
     - name: Test with pytest
       run: |
-        pip install pytest pytest-cov
-        pytest test/ --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+        mkdir -p junit
+        pytest test/ --doctest-modules --junitxml=junit/test-results.xml --cov=superfaktura --cov-report=xml --cov-report=html
     - name: Upload pytest test results
       uses: actions/upload-artifact@v4
       with:
